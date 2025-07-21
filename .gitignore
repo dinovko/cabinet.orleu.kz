@@ -1,0 +1,31 @@
+# --- Docker & Compose ---
+.dockerignore
+Dockerfile
+docker-compose*
+.env
+
+# --- .NET build artifacts ---
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# --- React build artifacts ---
+**/node_modules/
+**/build/
+**/dist/
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# --- IDE/editor files ---
+.vscode/
+.idea/
+*.swp
+*.sln
+*.csproj.user
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+.vs/

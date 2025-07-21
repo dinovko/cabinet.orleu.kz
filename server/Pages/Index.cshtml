@@ -1,0 +1,141 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Главная страница";
+    Layout = "_Layout";
+}
+
+<div class="header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-brand" style="font-size: 1.1rem;">
+                <img src="~/Vector o1.svg" height="auto" width="100px" />
+            </div>
+            <div class="navbar-actions">
+                @{
+                    if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-user dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.9rem;">
+                                @User.Identity.Name
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="userMenu" style="font-size: 0.85rem;">
+                                <li>
+                                    @if (Model.IsExternalFront == true)
+                                    {
+                                        <a class="dropdown-item" href="http://localhost:5003/Profile">
+                                            <i class="bi bi-person-circle"></i> Профиль
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="/Profile">
+                                            <i class="bi bi-person-circle"></i> Профиль
+                                        </a>
+                                    }
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" asp-page="/Logout" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right"></i> Выйти
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="~/Login" class="btn btn-login" style="font-size: 0.7rem;">Войти</a>
+                    }
+                }
+            </div>
+        </nav>
+        <div class="hero">
+            <h1>Личный кабинет</h1>
+            <p>Единая точка доступа к цифровой инфраструктуре 'Орлеу'</p>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <section class="feature-section">
+            <div class="feature-box fade-in">
+                <h2>ЛМС</h2>
+                <p>Платформа для обучения педагогов</p>
+            </div>
+            @* <div class="feature-box fade-in">
+                <h2>ППИ</h2>
+                <p>Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.</p>
+            </div> *@
+            <div class="feature-box fade-in">
+                <h2>ЕБДП</h2>
+                <p>Единая база данных педагогов, информация о прохождения своих курсов</p>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="about-content fade-in">
+                <h2>О нас</h2>
+                <p>АО «Национальный центр повышения квалификации «Өрлеу» – это ведущая организация в Казахстане, занимающаяся профессиональным развитием педагогов, обучением взрослых, прикладными исследованиями и распространением передовых образовательных практик. Они являются "лидирующим хабом" в этой сфере. </p>
+            </div>
+            <div class="about-image fade-in">
+                <img src="~/Vector o2.svg" height="150px" width="50px" alt="Example Company Office">
+            </div>
+        </section>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Example Links</h3>
+                <ul>
+                    <li><a href="#">Example Link 1</a></li>
+                    <li><a href="#">Example Link 2</a></li>
+                    <li><a href="#">Example Link 3</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Example Contacts</h3>
+                <p>Email: example@example.com</p>
+                <p>Phone: +1234567890</p>
+            </div>
+            <div class="footer-section">
+                <h3>Example Social</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; @DateTime.Now.Year Example Company. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+        });
+    </script>
+}
