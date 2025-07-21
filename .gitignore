@@ -10,7 +10,6 @@
 # --- React build artifacts ---
 **/node_modules/
 **/build/
-**/dist/
 *.log
 npm-debug.log*
 yarn-error.log*
