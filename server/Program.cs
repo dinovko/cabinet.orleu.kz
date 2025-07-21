@@ -11,8 +11,10 @@ builder.Services.AddRazorPages();
 //настройка авторизации через KeyCloak
 builder.Services.AddKeycloakAuthentication(builder.Configuration);
 
+#if !DEBUG
 //логгирование всего через Seilog
-//builder.Host.UseSerilog(server.cabinet.orleu.kz.Extensions.LoggingExtensions.ConfigureSerilog);
+builder.Host.UseSerilog(server.cabinet.orleu.kz.Extensions.LoggingExtensions.ConfigureSerilog);
+#endif
 
 //Для разных режимов работы, если React запущен для разработки, то добавлен CORS
 builder.Services.AddConfigurationCors(builder.Configuration);
@@ -26,8 +28,10 @@ builder.Services.AddConfigureDbContext(builder.Configuration);
 //все вытащил в репы, папка Interfaces хранит связь
 builder.Services.AddRepositories();
 
+#if DEBUG
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+#endif
 
 //ибаная залупа не запускается если не указывать явно
 builder.WebHost.UseUrls("http://0.0.0.0:80");
