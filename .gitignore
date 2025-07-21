@@ -1,7 +1,4 @@
 # --- Docker & Compose ---
-.dockerignore
-Dockerfile
-docker-compose*
 .env
 
 # --- .NET build artifacts ---
