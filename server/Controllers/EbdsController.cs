@@ -22,7 +22,7 @@ namespace server.cabinet.orleu.kz.Controllers
         }
 
         [HttpGet("userprofile")]
-        [ResponseCache(Duration = 3600)]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Get()
         {
             var currentUser = _contextAccessor?.HttpContext?.User?.Identity?.Name;

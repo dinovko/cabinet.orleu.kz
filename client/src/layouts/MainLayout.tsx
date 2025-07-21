@@ -62,9 +62,8 @@ const MainLayout: React.FC = () => {
     handleClose();
   };
 
-  const handleLogout = () => {
-    // ClearSession();
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    window.location.href = "/AutoLogout";
   };
 
   return (
@@ -82,7 +81,7 @@ const MainLayout: React.FC = () => {
           borderColor: theme.palette.divider,
           px: { xs: 2, sm: 3 },
           // py: 1,
-          maxHeight:"62px"
+          maxHeight: "62px",
         }}
       >
         <Toolbar
@@ -140,18 +139,18 @@ const MainLayout: React.FC = () => {
                     borderRadius: 2,
                     mt: 1,
                     minWidth: 140,
-                    fontSize:"0.8125rem"
+                    fontSize: "0.8125rem",
                   },
                 },
               }}
             >
-              <MenuItem sx={{fontSize:"0.8125rem"}}>
+              <MenuItem sx={{ fontSize: "0.8125rem" }}>
                 <UserCardMini />
               </MenuItem>
-              <MenuItem onClick={switchLang} sx={{fontSize:"0.8125rem"}}>
+              <MenuItem onClick={switchLang} sx={{ fontSize: "0.8125rem" }}>
                 {i18n.language?.toUpperCase()}
               </MenuItem>
-              <MenuItem onClick={handleLogout} sx={{fontSize:"0.8125rem"}}>
+              <MenuItem onClick={handleLogout} sx={{ fontSize: "0.8125rem" }}>
                 {t("logout") || "Выход"}
               </MenuItem>
             </Menu>
@@ -187,7 +186,7 @@ const MainLayout: React.FC = () => {
           sx={{
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
-              mt:5
+              mt: 5,
             },
           }}
         >
@@ -201,9 +200,9 @@ const MainLayout: React.FC = () => {
         sx={{
           flexGrow: 1,
           p: 5,
-          mt:1,
-          ml: 1,//!isMobile ? `${drawerWidth}px` : 0,
-          mr:1,
+          mt: 1,
+          ml: 1, //!isMobile ? `${drawerWidth}px` : 0,
+          mr: 1,
         }}
       >
         <Toolbar />

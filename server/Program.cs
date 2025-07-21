@@ -34,7 +34,7 @@ builder.Logging.AddConsole();
 #endif
 
 //ибаная залупа не запускается если не указывать явно
-builder.WebHost.UseUrls("http://0.0.0.0:80");
+//builder.WebHost.UseUrls("http://0.0.0.0:80");
 var app = builder.Build();
 //мигрируемся при запуске
 app.ApplyMigrationsWithRetry();

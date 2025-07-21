@@ -57,13 +57,12 @@ namespace server.cabinet.orleu.kz.Extensions
                         {
                             context.Properties.RedirectUri = IsExternalFront
                             ? externalClientUrl
-                            : "/";
+                            : "/Profile";
                         }
                         return Task.CompletedTask;
-                    }
+                    },
                 };
 
-                //options.SignedOutCallbackPath = "/signout-callback-oidc";
             });
 
             return services;
@@ -72,20 +71,6 @@ namespace server.cabinet.orleu.kz.Extensions
         {
             o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            //var authMode = configuration["authentication:mode"] ?? "Internal";
-
-            //if (authMode.Equals("External", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            //}
-            //else
-            //{
-            //    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-            //}
         }
 
         public static void ConfigureCookieAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions o, IConfiguration configuration)
@@ -165,7 +150,8 @@ namespace server.cabinet.orleu.kz.Extensions
             o.TokenValidationParameters.NameClaimType = "preferred_username";
             o.TokenValidationParameters.RoleClaimType = "roles";
 
-            o.RequireHttpsMetadata = false; // Для разработки
+            o.RequireHttpsMetadata = false; 
+            // Для разработки
 
             //            var authMode = configuration["authentication:mode"] ?? "Internal";
             //            if (authMode.Equals("External", StringComparison.OrdinalIgnoreCase))
