@@ -1,5 +1,9 @@
 ﻿@page
+@* @using Microsoft.AspNetCore.Mvc.Localization *@
+@using System.Globalization
 @model IndexModel
+
+@* @inject IViewLocalizer Localizer *@
 @{
     ViewData["Title"] = "Главная страница";
     Layout = "_Layout";
@@ -11,6 +15,13 @@
             <img src="~/Vector o1.svg" alt="Logo" width="100">
         </a>
         <div class="d-flex align-items-center">
+            <form method="get" asp-page="./Index" class="me-3">
+                <select name="culture" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="kk" selected="@((CultureInfo.CurrentUICulture.Name == "kk") ? "selected" : null)">Қазақша</option>
+                    <option value="ru" selected="@((CultureInfo.CurrentUICulture.Name == "ru") ? "selected" : null)">Русский</option>
+                    <option value="en" selected="@((CultureInfo.CurrentUICulture.Name == "en") ? "selected" : null)">English</option>
+                </select>
+            </form>
             @if (User?.Identity?.IsAuthenticated == true)
             {
                 <div class="dropdown">
@@ -46,7 +57,9 @@
             }
             else
             {
-                <a href="~/Login" class="btn btn-outline-primary">Войти</a>
+                <a href="~/Login" class="btn btn-outline-primary">
+                    @Model.Login
+                </a>
             }
         </div>
     </div>
@@ -56,8 +69,8 @@
     <div class="container text-center py-7">
         <div class="row justify-content-center fade-in">
             <div class="col-md-8">
-                <h1 class="display-4">Личный кабинет</h1>
-                <p class="lead">Единая точка доступа к цифровой инфраструктуре 'Орлеу'</p>
+                <h1 class="display-4">@Model.Dashboard</h1>
+                <p class="lead">@Model.AccessPoint</p>
             </div>
         </div>
     </div>
@@ -67,25 +80,25 @@
             <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="h4">ЛМС</h2>
-                        <p>Платформа для обучения педагогов</p>
+                        <h2 class="h4">@Model.LMS</h2>
+                        <p>@Model.LMSDescription</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="h4">ЕБДП</h2>
-                        <p>Единая база данных педагогов, информация о прохождения своих курсов</p>
+                        <h2 class="h4">@Model.EBDP</h2>
+                        <p>@Model.EBDPDescription</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row align-items-center fade-in">
+        <div class="row align-items-center fade-in mb-4">
             <div class="col-lg-6">
-                <h2>О нас</h2>
-                <p>АО «Национальный центр повышения квалификации «Өрлеу» – это ведущая организация в Казахстане, занимающаяся профессиональным развитием педагогов, обучением взрослых, прикладными исследованиями и распространением передовых образовательных практик. Они являются "лидирующим хабом" в этой сфере.</p>
+                <h2>@Model.About</h2>
+                <p>@Model.AboutText</p>
             </div>
             <div class="col-lg-6 text-center">
                 <img src="~/Vector o2.svg" alt="About image" class="img-fluid" style="max-height: 250px;">
@@ -98,23 +111,37 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mb-4">
-                <h5>Ссылки</h5>
+                <h5>@Model.Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="https://l.instagram.com/?u=https%3A%2F%2Ftaplink.cc%2Forleu.edu.kz%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAafk2JnHdCq-6g_qVxDHvv1pS-FPTBH99t4WbN_qi8jwLajhqhbUuZbZ365Bkw_aem_PZEIFT1iShhJlOONMKFMTQ&e=AT0DyW99zHRcLMEmafzB6gjmEqPS-4H11fQNEHNKS6oPEsQJlyEahjni5Qg1SiwDStFZxdZAEcBEdl_ZvXEcudH-YTwGmPnKXFgUaQ">О нас</a></li>
+                    <li><a href="https://l.instagram.com/?u=https%3A%2F%2Ftaplink.cc%2Forleu.edu.kz%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAafk2JnHdCq-6g_qVxDHvv1pS-FPTBH99t4WbN_qi8jwLajhqhbUuZbZ365Bkw_aem_PZEIFT1iShhJlOONMKFMTQ&e=AT0DyW99zHRcLMEmafzB6gjmEqPS-4H11fQNEHNKS6oPEsQJlyEahjni5Qg1SiwDStFZxdZAEcBEdl_ZvXEcudH-YTwGmPnKXFgUaQ">@Model.About</a></li>
                     <li><a href="https://l.instagram.com/?u=https%3A%2F%2Forleu-edu.kz%2Fru%2Fstrategy%2F%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAaeN4RQkXZLw5uhO9vl2TAjZUfTV5pt4y2-rfIDWzKHBIFG9AdFtK5hV9c1ElA_aem_f6kYw5tZ9fOYmc93KEX-xQ&e=AT2IHsJLHfp_dSi3KTGeZ7kKTp3v0T-R5vTYY4Ci_xBk6Ak0zLeuNjJSyvQI_zOinpb3v5p1_fHfQDaCKpcs4BzZotPbwIv3rjij2w">Стратегия 2029</a></li>
                     <li><a href="https://l.instagram.com/?u=https%3A%2F%2Forleu-edu.kz%2Fstrategy%2F%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAae-EGOfRDzQ6-rDco4qBLKZiZGHl7rsOCP_LnHpocZeS1-1PUDjegmrR2QwhQ_aem_7B3OZQorLcwwwI9FiIM3ug&e=AT29JVSJxZgMaICoAKLrX4NMQR1EsaH8NhUF3m8WZduNELsY1y_d5Psoi-yp8rSRxX0JQMA_twM01PmvlWZ2AgLdAiaD80B_iqm9Lw">2029 жылға дейінгі ДАМУ СТРАТЕГИЯСЫ</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-4">
-                <h5>Контакты</h5>
+                <h5>@Model.Contacts</h5>
                 <p>Email: kuzhat@orleu-edu.kz</p>
                 <p>Phone  :+7 (7172) 57 46 00</p>
             </div>
             <div class="col-md-4 mb-4">
-                <h5>Соцсети</h5>
-                <a class="btn btn-icon btn-sm btn-outline-dark me-2" href="#"><i class="bi bi-facebook"></i></a>
-                <a class="btn btn-icon btn-sm btn-outline-dark me-2" href="#"><i class="bi bi-twitter"></i></a>
-                <a class="btn btn-icon btn-sm btn-outline-dark" href="https://www.instagram.com/orleu_official/"><i class="bi bi-instagram"></i></a>
+                <h5>@Model.Socials</h5>
+                <a class="btn btn-sm btn-outline-dark me-2" href="#" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12 2.04c-1.17 0-2.33.31-3.29.89A5.07 5.07 0 0 0 5 8c0 2.21 1.43 4.07 3.43 4.83V16h2v-3.17h2.29L13 10h-2V8.5c0-.58.17-.98 1.06-.98H13V6.08A15.4 15.4 0 0 0 12 6c-1.5 0-2.5.92-2.5 2.61V10H7v1.83h2.5V16h2V13.83C13.57 13.07 15 11.21 15 9a5.07 5.07 0 0 0-3-4.61A6.46 6.46 0 0 0 12 2.04z" />
+                    </svg>
+                </a>
+
+                <a class="btn btn-sm btn-outline-dark me-2" href="#" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5 15c6.5 0 10-5.3 10-9.9v-.5a7.2 7.2 0 0 0 1.6-1.7c-.6.3-1.3.5-2 .6a3.4 3.4 0 0 0 1.4-1.9c-.7.5-1.5.8-2.3 1A3.5 3.5 0 0 0 8.5 2c-1.9 0-3.5 1.5-3.5 3.5 0 .3 0 .6.1.9A10.1 10.1 0 0 1 1.2 2.7c-.3.6-.5 1.3-.5 2a3.5 3.5 0 0 0 1.5 2.9c-.6 0-1.2-.2-1.7-.5v.1c0 1.7 1.3 3.1 3 3.5-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3 2.3A7 7 0 0 1 1 13.5c-.3 0-.5 0-.8-.1A9.7 9.7 0 0 0 5 15z" />
+                    </svg>
+                </a>
+
+                <a class="btn btn-sm btn-outline-dark" href="https://www.instagram.com/orleu_official/" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 2C5.8 2 5.6 2 4.8 2.1 4.1 2.2 3.6 2.4 3.2 2.7a3.4 3.4 0 0 0-1 1c-.3.4-.5.9-.6 1.6C1.4 6.4 1.4 6.6 1.4 8s0 1.6.1 2.4c.1.7.3 1.2.6 1.6a3.4 3.4 0 0 0 1 1c.4.3.9.5 1.6.6C5.6 14.6 5.8 14.6 8 14.6s2.4 0 3.2-.1c.7-.1 1.2-.3 1.6-.6a3.4 3.4 0 0 0 1-1c.3-.4.5-.9.6-1.6.1-.8.1-1 .1-2.4s0-1.6-.1-2.4c-.1-.7-.3-1.2-.6-1.6a3.4 3.4 0 0 0-1-1c-.4-.3-.9-.5-1.6-.6C10.4 2 10.2 2 8 2zm0 1.4c2.2 0 2.4 0 3.2.1.5.1.8.2 1 .3.3.2.5.4.7.7.2.2.3.5.3 1 .1.8.1 1 .1 3.2s0 2.4-.1 3.2c0 .5-.1.8-.3 1a1.8 1.8 0 0 1-.7.7c-.2.2-.5.3-1 .3-.8.1-1 .1-3.2.1s-2.4 0-3.2-.1a1.8 1.8 0 0 1-1-.3 1.8 1.8 0 0 1-.7-.7c-.2-.2-.3-.5-.3-1-.1-.8-.1-1-.1-3.2s0-2.4.1-3.2c0-.5.1-.8.3-1 .2-.3.4-.5.7-.7.2-.2.5-.3 1-.3.8-.1 1-.1 3.2-.1zM8 5.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2zm0 4.2a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2zm3.4-4.5a.6.6 0 1 1-1.2 0 .6.6 0 0 1 1.2 0z" />
+                    </svg>
+                </a>
             </div>
         </div>
         <div class="text-center pt-3 border-top">

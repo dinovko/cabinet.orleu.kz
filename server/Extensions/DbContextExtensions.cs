@@ -26,8 +26,9 @@ namespace server.cabinet.orleu.kz.Extensions
                         maxRetryDelay: TimeSpan.FromSeconds(10),
                         errorCodesToAdd: null);
                 }
-            ), 
-            ServiceLifetime.Scoped);
+            )
+            , ServiceLifetime.Scoped
+            );
         }
 
         /// <summary>
@@ -58,13 +59,13 @@ namespace server.cabinet.orleu.kz.Extensions
                 catch (Exception ex)
                 {
                     Log.Error(ex, "❌ Ошибка при применении миграций. Попытка №{Attempt}", 10 - maxRetries + 1);
-                    //throw;
+                    throw;
                 }
             }
 
             Log.Error("🚨 Не удалось применить миграции к базе данных после всех попыток. Приложение продолжает запуск без миграций.");
 
-            //db.Database.Migrate(); // последняя попытка
+            db.Database.Migrate(); // последняя попытка
         }
     }
 }

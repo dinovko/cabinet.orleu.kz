@@ -1,12 +1,33 @@
 using Hangfire;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Options;
 using Serilog;
 using server.cabinet.orleu.kz.Extensions;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Локализация
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 builder.Services.AddControllers();
 
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+   {
+        new CultureInfo("ru"),
+        new CultureInfo("kk"),
+        new CultureInfo("en")
+    };
+    options.DefaultRequestCulture = new RequestCulture("kk");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+#endregion
 
 //настройка авторизации через KeyCloak
 builder.Services.AddKeycloakAuthentication(builder.Configuration);
@@ -34,7 +55,9 @@ builder.Logging.AddConsole();
 #endif
 
 //ибаная залупа не запускается если не указывать явно
-//builder.WebHost.UseUrls("http://0.0.0.0:80");
+#if !DEBUG
+builder.WebHost.UseUrls("http://0.0.0.0:80");
+#endif
 var app = builder.Build();
 //мигрируемся при запуске
 app.ApplyMigrationsWithRetry();
@@ -70,7 +93,11 @@ app.UseStaticFiles(new StaticFileOptions
     }
 });
 
+var locOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(locOptions.Value);
+
 app.UseRouting();
+
 
 app.UseCors();
 //обязательно нужно для авторизации хоть через KeyCloak, хоть Identity
