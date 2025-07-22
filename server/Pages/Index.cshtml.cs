@@ -20,6 +20,12 @@ namespace server.cabinet.orleu.kz.Pages
         {
             bool IsAuth = User != null && User.Identity != null && User.Identity.IsAuthenticated;
             IsExternalFront = !String.IsNullOrEmpty(_config["FRONTEND_MODE"]) ? _config["FRONTEND_MODE"].Equals("External",StringComparison.OrdinalIgnoreCase) : false;
+
+            Response.GetTypedHeaders().CacheControl = new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+            {
+                Public = true,
+                MaxAge = TimeSpan.FromHours(1) // Кэшировать 1 час
+            };
         }
 
         //public ActionResult OnGet()

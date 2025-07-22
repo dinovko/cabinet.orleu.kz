@@ -5,127 +5,134 @@
     Layout = "_Layout";
 }
 
-<div class="header">
+<header id="header" class="navbar navbar-expand-lg navbar-end navbar-light bg-white shadow-sm">
     <div class="container">
-        <nav class="navbar">
-            <div class="navbar-brand" style="font-size: 1.1rem;">
-                <img src="~/Vector o1.svg" height="auto" width="100px" />
-            </div>
-            <div class="navbar-actions">
-                @{
-                    if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
-                    {
-                        <div class="dropdown">
-                            <button class="btn btn-user dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.9rem;">
-                                @User.Identity.Name
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="userMenu" style="font-size: 0.85rem;">
-                                <li>
-                                    @if (Model.IsExternalFront == true)
-                                    {
-                                        <a class="dropdown-item" href="http://localhost:5003/Profile">
-                                            <i class="bi bi-person-circle"></i> Профиль
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" href="/Profile">
-                                            <i class="bi bi-person-circle"></i> Профиль
-                                        </a>
-                                    }
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="post" asp-page="/Logout" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="dropdown-item text-danger">
-                                            <i class="bi bi-box-arrow-right"></i> Выйти
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    }
-                    else
-                    {
-                        <a href="~/Login" class="btn btn-login" style="font-size: 0.7rem;">Войти</a>
-                    }
-                }
-            </div>
-        </nav>
-        <div class="hero">
-            <h1>Личный кабинет</h1>
-            <p>Единая точка доступа к цифровой инфраструктуре 'Орлеу'</p>
+        <a class="navbar-brand" href="#">
+            <img src="~/Vector o1.svg" alt="Logo" width="100">
+        </a>
+        <div class="d-flex align-items-center">
+            @if (User?.Identity?.IsAuthenticated == true)
+            {
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        @User.Identity.Name
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userMenu">
+                        <li>
+                            @if (Model.IsExternalFront == true)
+                            {
+                                <a class="dropdown-item" href="http://localhost:5003/Profile">
+                                    <i class="bi bi-person-circle"></i> Профиль
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" href="/Profile">
+                                    <i class="bi bi-person-circle"></i> Профиль
+                                </a>
+                            }
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" asp-page="/Logout" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="bi bi-box-arrow-right"></i> Выйти
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a href="~/Login" class="btn btn-outline-primary">Войти</a>
+            }
         </div>
     </div>
-</div>
+</header>
 
-<div class="main-content">
-    <div class="container">
-        <section class="feature-section">
-            <div class="feature-box fade-in">
-                <h2>ЛМС</h2>
-                <p>Платформа для обучения педагогов</p>
+<main id="content" role="main">
+    <div class="container text-center py-7">
+        <div class="row justify-content-center fade-in">
+            <div class="col-md-8">
+                <h1 class="display-4">Личный кабинет</h1>
+                <p class="lead">Единая точка доступа к цифровой инфраструктуре 'Орлеу'</p>
             </div>
-            @* <div class="feature-box fade-in">
-                <h2>ППИ</h2>
-                <p>Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.</p>
-            </div> *@
-            <div class="feature-box fade-in">
-                <h2>ЕБДП</h2>
-                <p>Единая база данных педагогов, информация о прохождения своих курсов</p>
-            </div>
-        </section>
-
-        <section class="about-section">
-            <div class="about-content fade-in">
-                <h2>О нас</h2>
-                <p>АО «Национальный центр повышения квалификации «Өрлеу» – это ведущая организация в Казахстане, занимающаяся профессиональным развитием педагогов, обучением взрослых, прикладными исследованиями и распространением передовых образовательных практик. Они являются "лидирующим хабом" в этой сфере. </p>
-            </div>
-            <div class="about-image fade-in">
-                <img src="~/Vector o2.svg" height="150px" width="50px" alt="Example Company Office">
-            </div>
-        </section>
+        </div>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Example Links</h3>
-                <ul>
-                    <li><a href="#">Example Link 1</a></li>
-                    <li><a href="#">Example Link 2</a></li>
-                    <li><a href="#">Example Link 3</a></li>
-                </ul>
+    <div class="container pb-6">
+        <div class="row text-center mb-5">
+            <div class="col-md-6 mb-4 fade-in">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h4">ЛМС</h2>
+                        <p>Платформа для обучения педагогов</p>
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h3>Example Contacts</h3>
-                <p>Email: example@example.com</p>
-                <p>Phone: +1234567890</p>
-            </div>
-            <div class="footer-section">
-                <h3>Example Social</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+            <div class="col-md-6 mb-4 fade-in">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h2 class="h4">ЕБДП</h2>
+                        <p>Единая база данных педагогов, информация о прохождения своих курсов</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; @DateTime.Now.Year Example Company. All rights reserved.</p>
+
+        <div class="row align-items-center fade-in">
+            <div class="col-lg-6">
+                <h2>О нас</h2>
+                <p>АО «Национальный центр повышения квалификации «Өрлеу» – это ведущая организация в Казахстане, занимающаяся профессиональным развитием педагогов, обучением взрослых, прикладными исследованиями и распространением передовых образовательных практик. Они являются "лидирующим хабом" в этой сфере.</p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="~/Vector o2.svg" alt="About image" class="img-fluid" style="max-height: 250px;">
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-5 fade-in">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5>Ссылки</h5>
+                <ul class="list-unstyled">
+                    <li><a href="https://l.instagram.com/?u=https%3A%2F%2Ftaplink.cc%2Forleu.edu.kz%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAafk2JnHdCq-6g_qVxDHvv1pS-FPTBH99t4WbN_qi8jwLajhqhbUuZbZ365Bkw_aem_PZEIFT1iShhJlOONMKFMTQ&e=AT0DyW99zHRcLMEmafzB6gjmEqPS-4H11fQNEHNKS6oPEsQJlyEahjni5Qg1SiwDStFZxdZAEcBEdl_ZvXEcudH-YTwGmPnKXFgUaQ">О нас</a></li>
+                    <li><a href="https://l.instagram.com/?u=https%3A%2F%2Forleu-edu.kz%2Fru%2Fstrategy%2F%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAaeN4RQkXZLw5uhO9vl2TAjZUfTV5pt4y2-rfIDWzKHBIFG9AdFtK5hV9c1ElA_aem_f6kYw5tZ9fOYmc93KEX-xQ&e=AT2IHsJLHfp_dSi3KTGeZ7kKTp3v0T-R5vTYY4Ci_xBk6Ak0zLeuNjJSyvQI_zOinpb3v5p1_fHfQDaCKpcs4BzZotPbwIv3rjij2w">Стратегия 2029</a></li>
+                    <li><a href="https://l.instagram.com/?u=https%3A%2F%2Forleu-edu.kz%2Fstrategy%2F%3Ffbclid%3DPAZXh0bgNhZW0CMTEAAae-EGOfRDzQ6-rDco4qBLKZiZGHl7rsOCP_LnHpocZeS1-1PUDjegmrR2QwhQ_aem_7B3OZQorLcwwwI9FiIM3ug&e=AT29JVSJxZgMaICoAKLrX4NMQR1EsaH8NhUF3m8WZduNELsY1y_d5Psoi-yp8rSRxX0JQMA_twM01PmvlWZ2AgLdAiaD80B_iqm9Lw">2029 жылға дейінгі ДАМУ СТРАТЕГИЯСЫ</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Контакты</h5>
+                <p>Email: kuzhat@orleu-edu.kz</p>
+                <p>Phone  :+7 (7172) 57 46 00</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5>Соцсети</h5>
+                <a class="btn btn-icon btn-sm btn-outline-dark me-2" href="#"><i class="bi bi-facebook"></i></a>
+                <a class="btn btn-icon btn-sm btn-outline-dark me-2" href="#"><i class="bi bi-twitter"></i></a>
+                <a class="btn btn-icon btn-sm btn-outline-dark" href="https://www.instagram.com/orleu_official/"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+        <div class="text-center pt-3 border-top">
+            <p class="mb-0">&copy; "Өрлеу" біліктілікті арттыру ұлттық орталығы @DateTime.Now.Year</p>
         </div>
     </div>
 </footer>
 
 @section Scripts {
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
             const fadeElements = document.querySelectorAll('.fade-in');
 
-            const fadeInObserver = new IntersectionObserver((entries) => {
+            fadeElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -133,9 +140,7 @@
                 });
             }, { threshold: 0.1 });
 
-            fadeElements.forEach(element => {
-                fadeInObserver.observe(element);
-            });
+            fadeElements.forEach(el => observer.observe(el));
         });
     </script>
 }
