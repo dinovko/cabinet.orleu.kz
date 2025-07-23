@@ -27,3 +27,4 @@ Thumbs.db
 .vs/
 
 pgdata/
+docker-compose.yml
