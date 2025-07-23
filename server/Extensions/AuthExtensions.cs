@@ -12,7 +12,9 @@ namespace server.cabinet.orleu.kz.Extensions
 
             var externalClientUrl = configuration["authentication:external_client_url"] ?? "";
 
-            bool IsExternalFront = authMode.Equals("External", StringComparison.OrdinalIgnoreCase);
+            var frontMode = configuration["FRONTEND_MODE"] ?? "Embeded";
+
+            bool IsExternalFront = frontMode.Equals("External", StringComparison.OrdinalIgnoreCase);
 
             services.AddAuthentication(options =>
             {
