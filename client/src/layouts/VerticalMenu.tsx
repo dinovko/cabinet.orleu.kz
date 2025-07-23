@@ -50,7 +50,7 @@ const VerticalMenu: React.FC<Props> = ({ items }) => {
                       component={NavLink}
                       to={child.path || "#"}
                       sx={{ pl: 3 }}
-                    //   className={(isActive) => (isActive ? "active" : "")}
+                      //   className={(isActive) => (isActive ? "active" : "")}
                     >
                       {child.icon && <ListItemIcon>{child.icon}</ListItemIcon>}
                       <ListItemText primary={child.label} />
@@ -62,7 +62,11 @@ const VerticalMenu: React.FC<Props> = ({ items }) => {
             </>
           ) : (
             <ListItem disablePadding>
-              <ListItemButton component={NavLink} to={item.path || "#"}>
+              <ListItemButton
+                component={item.path?.includes("http") ? "a" : NavLink}
+                to={item.path || "#"}
+                target={item.path?.includes("http") ? "_blank" : undefined}
+              >
                 {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
                 <ListItemText primary={item.label} />
               </ListItemButton>
